@@ -370,7 +370,7 @@ The Configuration Traits, `c` field value is a list of strings. These are specia
 |:---:|:---|:---:|:---|
 |`EO`| Establishment-Only | True |Only establishment events MUST appear in this KEL |
 |`DND`| Do-Not-Delegate | True | This KEL MUST NOT act as a delegator of delegated AIDs|
-|`DID`| Delegate-Is-Delegator | True | Treat a delegated AID the same as its Delegator AID|
+|`DID`| Delegate-Is-Delegator | True | Treat this delegated AID the same as its Delegator AID. Delegated inception only|
 |`RB`| Registrar-Backers | False | The backer list MUST provide registrar backer AIDs |
 |`NRB`| No-Registrar-Backers | False | Registrar backers are no longer allowed |
 
@@ -378,7 +378,7 @@ The `Establishment-Only`, `EO` config trait enables the Controller to increase i
 
 The `Do-Not-Delegate`, `DND` config trait enables the Controller to limit delegations entirely or limit the depth to which a given AID can delegate. This prevents spurious delegations. A delegation seal MAY appear in an Interaction event.  Interaction events are less secure than rotation events so this configuration trait prevents delegations.  In addition, a Delegatee holds its own private keys. Therefore, a given [[xref: toip1, delegatee, Delegatee]] could delegate other AIDS via interaction events that do not require the approval of its delegate. A Validator MUST invalidate, i.e., drop any delegated events whose Delegator has this configuration trait.
 
-The `Delegate-Is-Delegator`, `DID` config trait enables the Controller to signal to validators that any Delegate (Delegatee) AIDs are to be treated as equivalent to the Delegator. This enables horizontal scaling of a Delegator's signing infrastructure.
+The `Delegate-Is-Delegator`, `DID` config trait appears in the Delegated Inception, `dip` event of a Delegatee and MUST NOT appear in a non-delegated Inception, `icp` event. It signals to Validators that the Controller of the Delegatee, i.e., the entity that holds the private keys, and the Controller of the Delegator designated by the `di` field of that same event are one and the same entity. Because a Delegator MUST approve a Delegatee's delegated inception event by anchoring a delegation seal to that event in the Delegator's own KEL, the Delegator thereby also consents to the appearance of the `DID` config trait in that event. The assertion is granular and applies only to the delegation relationship established by the event in which it appears. It says nothing about any Delegatees that the Delegatee may itself delegate; each such delegation makes or withholds the assertion in its own delegated inception event. Were the trait to appear instead in a Delegator's inception event, its referent would be ambiguous, because a Delegator MAY itself be the Delegatee of a higher-level Delegator. This config trait enables horizontal scaling of a Controller's signing infrastructure by making the equivalence of the AIDs that Controller operates verifiable from their KELs.
 
 The `Registrar-Backer`, `RB` config trait indicates that the [[ref: Backer]] (witness) list in the establishment event in which this trait appears provides the AIDs of ledger registrar backers. The event MUST also include Registrar Backer Seal for each registrar backer in the list.  This config trait enables a KEL to start with or switch to using registrar backers instead of witnesses.
 
@@ -616,7 +616,7 @@ The next key digests in the message body are derived from the following set of n
 ]
 ```
 
-The AID created by this inception event is the value of the `i` field, that is, `EPR7FWsN3tOM8PqfMap2FRfF4MFQ4v3ZXjBUcMVtvhmB`. For the purposes of the examples, let this be given the user-friendly alias `ean` as in Ean's AID. Notice that the config trait list for Ean has the config trait `DID` for `Delegate-Is-Delegator` which means that Validators may treat Delegates (Delegatees) of Ean as if they were Ean.
+The AID created by this inception event is the value of the `i` field, that is, `EPR7FWsN3tOM8PqfMap2FRfF4MFQ4v3ZXjBUcMVtvhmB`. For the purposes of the examples, let this be given the user-friendly alias `ean` as in Ean's AID. Notice that the config trait list for Ean includes the config trait `DID` for `Delegate-Is-Delegator`. Its appearance here is an editorial error that is retained pending a regeneration of the examples. As defined above, the `DID` config trait belongs in a Delegated Inception, `dip` event, where it asserts that the Controller of the delegated AID and the Controller of the Delegator designated by the `di` field of that event are the same entity. Ean's inception event is not delegated, so the trait has no referent in it, and Ean is the Delegator rather than the Delegatee of the delegation shown in the examples that follow. Because the examples in this specification are chained to each other by their SAIDs, correcting the trait changes Ean's AID and hence every subsequent example, so the correction, which moves the `DID` config trait to Fay's Delegated Inception event below, is deferred to that regeneration.
 
 #### Delegated Inception Event Message Body
 
