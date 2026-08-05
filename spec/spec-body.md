@@ -470,8 +470,7 @@ Event seals are used for endorsing delegated events and for endorsing external i
 
 ```json
 {
-
-  "i": "'EJync0CSV0HLN4zdVgCyIUHIG_KiZTRFByXJcOclFbaC'",
+  "i": "EJync0CSV0HLN4zdVgCyIUHIG_KiZTRFByXJcOclFbaC",
   "s": "1",
   "d": "EEaJrM-0HPs4hATSqSpvotRBAjKuJO6ri5Uh7KBoLYbV"
 }
@@ -485,7 +484,7 @@ The JSON version is shown. There is also a native CESR version of the seal.
 
 ```json
 {
-  "i": "EJync0CSV0HLN4zdVgCyIUHIG_KiZTRFByXJcOclFbaC",
+  "i": "EJync0CSV0HLN4zdVgCyIUHIG_KiZTRFByXJcOclFbaC"
 }
 ```
 
@@ -503,7 +502,7 @@ The JSON version is shown. There is also a native CESR version of the seal.
 
 ```json
 {
-  "bi": "EHTLoDjCFXSEHnOJiwdwyeHGqRsRRMlwMuggAGigSsXx",
+  "bi": "BHxCDxJrh6fpqTfOmT6OgtXnk-Unl-po8BR1Taa9n2Za",
   "d": "EA8_fj-Ezin_Us_gUcg5JQJkIIBnrcZt3HEIuH-E1lpe"
 }
 ```
